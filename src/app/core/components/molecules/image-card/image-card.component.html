@@ -1,0 +1,34 @@
+<mat-card
+  class="xmcy-image-card"
+  data-test="xmcy-image-card"
+  (click)="handleCardClick($event)"
+  (mouseover)="isHovered = true"
+  (mouseleave)="isHovered = false">
+  <img
+    mat-card-image
+    class="xmcy-image-card__pic"
+    data-test="image-card-pic"
+    [src]="bypassedUrl">
+  <div
+    class="xmcy-image-card__hover-overlay"
+    data-test="image-card-hover-overlay"
+    *ngIf="isHovered">
+    <span
+      class="hover-overlay__text"
+      data-test="image-card-action-text"
+      *ngIf="!this.isActionDone">{{clickActionText}}</span>
+    <span
+      class="hover-overlay__text"
+      id="hover-overlay__done-text"
+      data-test="image-card-action-done-text"
+      *ngIf="this.isActionDone">
+      {{afterActionText}}
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Action done icon"
+        fontIcon="done">
+      </mat-icon>
+    </span>
+  </div>
+</mat-card>
+

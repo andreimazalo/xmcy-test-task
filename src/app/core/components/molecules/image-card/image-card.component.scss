@@ -1,0 +1,32 @@
+@use 'sass:map';
+@import '../../../theme/palette';
+
+.xmcy-image-card {
+  height: 300px;
+  width: 200px;
+}
+
+.xmcy-image-card:hover {
+  cursor: pointer;
+}
+
+.xmcy-image-card__hover-overlay {
+  background-color: map.get($light-theme-background-palette, hover);
+  position: absolute;
+  width: 200px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .hover-overlay__text {
+    color: $light-primary-text;
+  }
+
+  #hover-overlay__done-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+

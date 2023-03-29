@@ -1,0 +1,23 @@
+.xmcy-photos__infinite-scroll {
+  width: 100%;
+  height: calc(100vh - 64px);
+  overflow-y: scroll;
+}
+
+.infinite-scroll__list {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.infinite-scroll__list-load-more-tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.infinite-scroll__image-card {
+  margin: 30px;
+}
