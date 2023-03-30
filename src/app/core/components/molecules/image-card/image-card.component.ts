@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Image } from '../../../domain/image.interface';
+
 export interface ImageCardClickedEvent extends Image {
   domEvent: Event;
 }

@@ -3,8 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import * as localStorageKeys from '../../../core/constants/local-storage-keys';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 
-
-
 @Component({
   selector: 'app-single-photo-view',
   templateUrl: './single-photo-view.component.html',

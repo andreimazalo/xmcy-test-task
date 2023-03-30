@@ -22,7 +22,7 @@ describe('ImageService', () => {
     service = TestBed.inject(ImageService);
   });
 
-  describe('getRandomImage', () => {
+  describe('when getRandomImage method is called', () => {
     it('should query for random image with parameters specified', () => {
       service.getRandomImage(200, 300).subscribe((resp) => {
         expect(resp).toBeTruthy();
@@ -32,7 +32,7 @@ describe('ImageService', () => {
     });
   });
 
-  describe('convertImgToBase64', () => {
+  describe('when convertImgToBase64 method is called', () => {
     it('should convert img blob into base64', () => {
       service.convertImgToBase64(new Blob(['mock img bits'], { type: 'image/jpeg' })).subscribe(
         resp => {

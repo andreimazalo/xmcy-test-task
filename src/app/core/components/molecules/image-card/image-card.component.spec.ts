@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 describe('ImageCardComponent', () => {
   let component: ImageCardComponent;
   let fixture: ComponentFixture<ImageCardComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ImageCardComponent ],
