@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { By } from '@angular/platform-browser';
 import { activatedRouteMockConstructor, routerMockSpyConstructor } from '../../../core/test/common-mocks.spec';
+import { APP_ROUTES } from '../../../core/router/routes.enum';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -36,9 +37,9 @@ describe('NavbarComponent', () => {
     });
   })
 
-  describe('when url is set to ""', () => {
+  describe('when url is set to photos', () => {
     it('should only highlight Photos navigation button', () => {
-      component.currentURL = '';
+      component.currentURL = APP_ROUTES.PHOTOS;
       const photosButton = fixture.debugElement.query(By.css('[data-test=photos-nav-button]'));
       const favoritesButton = fixture.debugElement.query(By.css('[data-test=favorites-nav-button]'));
 
@@ -51,7 +52,7 @@ describe('NavbarComponent', () => {
 
   describe('when url is set to favorites', () => {
     it('should only highlight Favorites button', () => {
-      component.currentURL = 'favorites';
+      component.currentURL = APP_ROUTES.FAVORITES;
       const photosButton = fixture.debugElement.query(By.css('[data-test=photos-nav-button]'));
       const favoritesButton = fixture.debugElement.query(By.css('[data-test=favorites-nav-button]'));
 

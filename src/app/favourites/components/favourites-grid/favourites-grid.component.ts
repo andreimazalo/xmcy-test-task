@@ -15,9 +15,10 @@ export class FavouritesGridComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.favoritePhotos = JSON.parse(localStorage.getItem(localStorageKeys.favoritePhotosMapKey) ?? '') ?? {};
+    this.favoritePhotos = JSON.parse(localStorage.getItem(localStorageKeys.favoritePhotosMapKey) ?? '{}') ?? {};
     this.isFavoritesListEmpty = Object.keys(this.favoritePhotos).length === 0;
   }
+
   public goToSinglePhotoPage(imgId: string) {
     this.router.navigate([`/${APP_ROUTES.SINGLE_PHOTO}/${imgId}`]);
   }

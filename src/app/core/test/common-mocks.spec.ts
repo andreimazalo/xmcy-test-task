@@ -10,6 +10,10 @@ export function getItemSpyConstructor(customReturn?: any) {
   });
 }
 
+export function setItemSpyConstructor() {
+  return spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {});
+}
+
 export function localStorageServiceSpyConstructor() {
   return {
     getFromMap: jasmine.createSpy('getFromMap').and.callFake((mapName: string, key: string) => ''),

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalStorageService } from './local-storage.service';
 import { favoritePhotosMapKey } from '../constants/local-storage-keys';
+import { getItemSpyConstructor, setItemSpyConstructor } from '../test/common-mocks.spec';
 
 describe('LocalStorageService', () => {
   let service: LocalStorageService;
@@ -10,13 +11,11 @@ describe('LocalStorageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(LocalStorageService);
-    getItemSpy = spyOn(localStorage, 'getItem').and.callFake((key: string) => {
-      return JSON.stringify({
-        '1': 'test 1',
-      });
+    getItemSpy = getItemSpyConstructor({
+      '1': 'test 1',
     });
 
-    setItemSpy = spyOn(localStorage, 'setItem').and.callFake((key: string, value: string) => {});
+    setItemSpy = setItemSpyConstructor();
   });
 
   describe('when pushToMap method is called', () => {
