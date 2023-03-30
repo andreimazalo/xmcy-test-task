@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as localStorageKeys from '../../../core/constants/local-storage-keys';
 import { Router } from '@angular/router';
+import { APP_ROUTES } from '../../../core/router/routes.enum';
 
 @Component({
   selector: 'app-favourites-grid',
@@ -16,7 +17,6 @@ export class FavouritesGridComponent implements OnInit {
     this.favoritePhotos = JSON.parse(localStorage.getItem(localStorageKeys.favoritePhotosMapKey) ?? '') ?? {};
   }
   public goToSinglePhotoPage(imgId: string) {
-    this.router.navigate(['/photos/' + imgId]);
+    this.router.navigate([`/${APP_ROUTES.SINGLE_PHOTO}/${imgId}`]);
   }
-
 }

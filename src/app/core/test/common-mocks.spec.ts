@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { NavigationStart } from '@angular/router';
+import { NavigationStart, UrlCreationOptions, UrlTree } from '@angular/router';
 
 export function getItemSpyConstructor() {
   return spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
@@ -26,8 +26,12 @@ export function activatedRouteMockConstructor() {
 
 export function routerMockSpyConstructor() {
   return {
-    events: of(new NavigationStart(1, 'test')),
-    navigate: jasmine.createSpy('navigate').and.callFake((uri) => {})
+    events: of(new NavigationStart(1, '/test')),
+    navigate: jasmine.createSpy('navigate').and.callFake((uri) => {}),
+    createUrlTree: jasmine.createSpy('createUrlTree').and.callFake((commands: any[], navigationExtras: UrlCreationOptions) =>{
+      return {} as UrlTree;
+    }),
+    serializeUrl: jasmine.createSpy('serializeUrl').and.callFake((url: UrlTree) => '')
   };
 }
 
