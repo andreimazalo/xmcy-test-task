@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ImageCardComponent } from './image-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { By } from '@angular/platform-browser';
@@ -28,8 +27,8 @@ describe('ImageCardComponent', () => {
     it('should display click action text', () => {
       component.clickActionText = 'Test text';
       const imageCard = fixture.debugElement.query(By.css('[data-test=xmcy-image-card]'));
-      imageCard.triggerEventHandler('mouseover');
 
+      imageCard.triggerEventHandler('mouseover');
       fixture.detectChanges();
       const hoverActionTextElem = fixture.debugElement.query(By.css('[data-test=image-card-action-text]'));
 

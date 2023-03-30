@@ -1,29 +1,28 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
 import { defaultPageSize, loadMockDelay, PhotosInfiniteScrollComponent } from './photos-infinite-scroll.component';
-import { of } from 'rxjs';
 import { ImageService } from '../../../core/services/image.service';
 import { By } from '@angular/platform-browser';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ImageCardModule } from '../../../core/components/molecules/image-card/image-card.module';
 import { ImageCardClickedEvent } from '../../../core/components/molecules/image-card/image-card.component';
-
 import  * as localStorageKeys  from '../../../core/constants/local-storage-keys';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
+import { imageServiceSpyConstructor, localStorageServiceSpyConstructor } from '../../../core/test/common-mocks.spec';
 
 describe('PhotosInfiniteScrollComponent', () => {
   let component: PhotosInfiniteScrollComponent;
   let fixture: ComponentFixture<PhotosInfiniteScrollComponent>;
-  let imageServiceSpy = {
-    getRandomImage: jasmine.createSpy('getRandomImage').and.callFake((width: number, height: number) => {
-      return of(new Blob())
-    }),
-  };
+  let imageServiceSpy = imageServiceSpyConstructor();
+  let localStorageServiceSpy = localStorageServiceSpyConstructor();
+  let mockScrollEvent: Event;
+  let addImagesPageSpy: jasmine.Spy<() => void>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PhotosInfiniteScrollComponent ],
       providers: [
         {provide: ImageService, useValue: imageServiceSpy},
+        {provide: LocalStorageService, useValue: localStorageServiceSpy},
       ],
       imports: [
         MatProgressSpinnerModule,
@@ -70,7 +69,7 @@ describe('PhotosInfiniteScrollComponent', () => {
   });
 
   describe('when saveImageToFavorites method is called', () => {
-    it('should save image to localStorage',  fakeAsync(() => {
+    it('should save image to localStorage',  () => {
       const mockCardClickedEvent = {
         imgSrc: 'base64:/test-test',
         imgId: 'mockId',
@@ -78,11 +77,9 @@ describe('PhotosInfiniteScrollComponent', () => {
       } as ImageCardClickedEvent;
 
       component.saveImageToFavorites(mockCardClickedEvent);
-      tick();
 
-      const resultMap = JSON.parse(localStorage.getItem(localStorageKeys.favoritePhotosMapKey) ?? '') ?? {} as Record<string, string>;
-      expect(resultMap['mockId']).toBeDefined();
-    }));
+      expect(localStorageServiceSpy.pushToMap).toHaveBeenCalledWith(localStorageKeys.favoritePhotosMapKey, 'mockId', 'base64:/test-test');
+    });
   });
 
   describe('when addImagesPage method is called', () => {
@@ -92,22 +89,26 @@ describe('PhotosInfiniteScrollComponent', () => {
       component.addImagesPage();
 
       expect(component.imageIDs.length).toEqual(defaultPageSize);
-    })
-  })
+    });
+  });
 
   describe('loadMoreIfReachedTheEnd method', () => {
+    beforeEach(() => {
+      addImagesPageSpy = spyOn(component, 'addImagesPage');
+
+      mockScrollEvent = {
+        target: {
+          scrollHeight: 1740,
+          offsetHeight: 625,
+          scrollTop: 900,
+        }
+      } as unknown as Event;
+    });
+
     describe('when called with event indicating scroll to the bottom', () => {
       it('should load the next page of cards', fakeAsync(() => {
-        const addImagesPageSpy = spyOn(component, 'addImagesPage');
-        const mockScrollEvent = {
-          target: {
-            scrollHeight: 1740,
-            offsetHeight: 625,
-            scrollTop: 900,
-          }
-        } as unknown as Event;
-
         component.loadMoreIfReachedTheEnd(mockScrollEvent);
+
         tick(loadMockDelay);
 
         expect(addImagesPageSpy).toHaveBeenCalled();
@@ -117,14 +118,7 @@ describe('PhotosInfiniteScrollComponent', () => {
     describe('when called with loading already in progress and valid scroll event', () => {
       it('should not load next page', fakeAsync(() => {
         component.isLoadingNextPage = true;
-        const addImagesPageSpy = spyOn(component, 'addImagesPage');
-        const mockScrollEvent = {
-          target: {
-            scrollHeight: 1740,
-            offsetHeight: 625,
-            scrollTop: 1000,
-          }
-        } as unknown as Event;
+        (mockScrollEvent.target as HTMLDivElement).scrollTop = 1000;
 
         component.loadMoreIfReachedTheEnd(mockScrollEvent);
         tick(loadMockDelay);
@@ -135,14 +129,7 @@ describe('PhotosInfiniteScrollComponent', () => {
 
     describe('when called with event which does NOT indicate scroll to the bottom', () => {
       it('should not load next page', fakeAsync(() => {
-        const addImagesPageSpy = spyOn(component, 'addImagesPage');
-        const mockScrollEvent = {
-          target: {
-            scrollHeight: 1740,
-            offsetHeight: 625,
-            scrollTop: 100,
-          }
-        } as unknown as Event;
+        (mockScrollEvent.target as HTMLDivElement).scrollTop = 100;
 
         component.loadMoreIfReachedTheEnd(mockScrollEvent);
         tick(loadMockDelay);

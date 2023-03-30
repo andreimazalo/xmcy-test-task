@@ -8,7 +8,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  private destroyed$ = new Subject();
+  private destroyed$ = new Subject<void>();
   public currentURL = '';
 
   constructor(private router: Router) {
@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next('');
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

@@ -1,17 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NavbarComponent } from './navbar.component';
-import { of } from 'rxjs';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { By } from '@angular/platform-browser';
+import { routerMockSpyConstructor } from '../../../core/test/common-mocks.spec';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-  const routerMock = {
-    events: of(new NavigationStart(1, 'test')),
-  };
+  const routerMock = routerMockSpyConstructor();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

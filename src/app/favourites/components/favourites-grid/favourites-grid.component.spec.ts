@@ -1,17 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FavouritesGridComponent } from './favourites-grid.component';
 import { ImageCardModule } from '../../../core/components/molecules/image-card/image-card.module';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { getItemSpyConstructor, routerMockSpyConstructor } from '../../../core/test/common-mocks.spec';
 
 describe('FavouritesGridComponent', () => {
   let component: FavouritesGridComponent;
   let fixture: ComponentFixture<FavouritesGridComponent>;
-  let getItemSpy;
-  const routerSpy = {
-    navigate: jasmine.createSpy('navigate').and.callFake((uri) => {})
-  }
+  let getItemSpy: jasmine.Spy<(key: string) => (string | null)>;
+  const routerSpy = routerMockSpyConstructor();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,13 +21,7 @@ describe('FavouritesGridComponent', () => {
     })
     .compileComponents();
 
-    getItemSpy = spyOn(localStorage, 'getItem');
-    getItemSpy.and.callFake((key: string): string => {
-      return JSON.stringify({
-        '1': 'test 1',
-        '2': 'test 2',
-      });
-    });
+    getItemSpy = getItemSpyConstructor();
 
     fixture = TestBed.createComponent(FavouritesGridComponent);
     component = fixture.componentInstance;

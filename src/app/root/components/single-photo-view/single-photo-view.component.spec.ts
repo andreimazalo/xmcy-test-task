@@ -1,24 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SinglePhotoViewComponent } from './single-photo-view.component';
-import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ImageCardModule } from '../../../core/components/molecules/image-card/image-card.module';
 import { favoritePhotosMapKey } from '../../../core/constants/local-storage-keys';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { By } from '@angular/platform-browser';
+import { activatedRouteMockConstructor, localStorageServiceSpyConstructor } from '../../../core/test/common-mocks.spec';
 
 describe('SinglePhotoViewComponent', () => {
   let component: SinglePhotoViewComponent;
   let fixture: ComponentFixture<SinglePhotoViewComponent>;
 
-  const activatedRouteMock = {
-    params: of({id: '1'})
-  };
-
-  const localStorageServiceSpy = {
-    getFromMap: jasmine.createSpy('getFromMap').and.callFake((mapName: string, key: string) => ''),
-    removeFromMap: jasmine.createSpy('removeFromMap').and.callFake((key: string) => {}),
-  }
+  const activatedRouteMock = activatedRouteMockConstructor();
+  const localStorageServiceSpy = localStorageServiceSpyConstructor();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
