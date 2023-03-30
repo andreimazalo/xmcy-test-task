@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as localStorageKeys from '../../../core/constants/local-storage-keys';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 
-const singlePhotoViewImageWidth = 300;
-const singlePhotoViewImageHeight = 450;
+
 
 @Component({
   selector: 'app-single-photo-view',
@@ -14,6 +13,8 @@ const singlePhotoViewImageHeight = 450;
 export class SinglePhotoViewComponent implements OnInit {
   public imgId = '';
   public imgSrc = '';
+  public singlePhotoViewImageWidth = 300;
+  public singlePhotoViewImageHeight = 450;
 
   constructor(private activatedRoute: ActivatedRoute, private localStorageService: LocalStorageService) {}
 
@@ -27,7 +28,4 @@ export class SinglePhotoViewComponent implements OnInit {
   public deletePhoto(): void {
     this.localStorageService.removeFromMap(localStorageKeys.favoritePhotosMapKey, this.imgId)
   }
-
-  protected readonly singlePhotoViewImageHeight = singlePhotoViewImageHeight;
-  protected readonly singlePhotoViewImageWidth = singlePhotoViewImageWidth;
 }

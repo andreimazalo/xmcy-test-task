@@ -1,0 +1,14 @@
+@use 'sass:map';
+@import '../../../core/theme/palette';
+
+.button-selected {
+  background-color: map.get($light-theme-background-palette, selected-button);
+}
+
+.photo-lib__header-link {
+  margin: 0 10px;
+}
+
+.photo-lib__app-name {
+  margin-right: 10px;
+}

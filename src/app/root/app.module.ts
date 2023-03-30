@@ -9,11 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { SinglePhotoViewComponent } from './components/single-photo-view/single-photo-view.component';
 import { ImageCardModule } from '../core/components/molecules/image-card/image-card.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SinglePhotoViewComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

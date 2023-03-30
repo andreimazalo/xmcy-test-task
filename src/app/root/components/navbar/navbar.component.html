@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <span class="photo-lib__app-name">Photo Library</span>
+  <nav class="photo-lib__header">
+    <a
+      class="photo-lib__header-link"
+      data-test="photos-nav-button"
+      mat-button
+      [ngClass]="currentURL === '/' ? 'button-selected': ''"
+      routerLink="">
+        Photos
+    </a>
+    <a
+      class="photo-lib__header-link"
+      data-test="favorites-nav-button"
+      mat-button
+      [ngClass]="currentURL === '/favorites' ? 'button-selected': ''"
+      routerLink="favorites">
+        Favorites
+    </a>
+  </nav>
+</mat-toolbar>
