@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImageCardComponent } from './image-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { By, DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { SimpleChanges } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('ImageCardComponent', () => {
@@ -31,17 +30,6 @@ describe('ImageCardComponent', () => {
     fixture = TestBed.createComponent(ImageCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  describe('when ImageCardComponent receives a blob to display', () => {
-    it('should create insert it into DOM for display', () => {
-      const getImageDOMLinkSpy = spyOn(component, 'getImageDOMLink');
-      component.imgSrc = new Blob();
-
-      component.ngOnChanges({imgSrc: {}} as unknown as SimpleChanges);
-
-      expect(getImageDOMLinkSpy).toHaveBeenCalled();
-    });
   });
 
   describe('when ImageCardComponent is hovered', () => {
@@ -80,6 +68,20 @@ describe('ImageCardComponent', () => {
       const hoverActionTextElem = fixture.debugElement.query(By.css('[data-test=image-card-action-done-text]'));
 
       expect(hoverActionTextElem.nativeElement.innerHTML).toContain('After action text');
+    });
+  });
+
+  describe('when ImageCardComponent is hovered but displayHoverOverlay is set to false', () => {
+    it('should not display click action test', () => {
+      const imageCard = fixture.debugElement.query(By.css('[data-test=xmcy-image-card]'));
+      component.clickActionText = 'Test text';
+      component.displayHoverOverlay = false;
+      imageCard.triggerEventHandler('mouseover');
+
+      fixture.detectChanges();
+      const hoverActionTextElem = fixture.debugElement.query(By.css('[data-test=image-card-action-text]'));
+
+      expect(hoverActionTextElem).toBeNull();
     });
   });
 });

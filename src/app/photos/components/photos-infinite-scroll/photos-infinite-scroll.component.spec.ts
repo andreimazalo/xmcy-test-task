@@ -72,8 +72,9 @@ describe('PhotosInfiniteScrollComponent', () => {
   describe('when saveImageToFavorites method is called', () => {
     it('should save image to localStorage',  fakeAsync(() => {
       const mockCardClickedEvent = {
-        imgSrc: new Blob(),
+        imgSrc: 'base64:/test-test',
         imgId: 'mockId',
+        domEvent: {} as Event
       } as ImageCardClickedEvent;
 
       component.saveImageToFavorites(mockCardClickedEvent);

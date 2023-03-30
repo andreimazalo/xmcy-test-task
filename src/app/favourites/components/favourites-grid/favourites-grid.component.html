@@ -1,0 +1,12 @@
+<div class="favourite-photos__list" data-test="favourites-list">
+  <ng-container *ngFor="let photo of favoritePhotos | keyvalue">
+    <app-image-card
+      class="favourite-photos__image-card"
+      data-test="favourite-photos-image-card"
+      clickActionText="Open"
+      [imgId]="photo.key"
+      [imgSrc]="photo.value"
+      (cardClicked)="goToSinglePhotoPage(photo.key)"
+    ></app-image-card>
+  </ng-container>
+</div>

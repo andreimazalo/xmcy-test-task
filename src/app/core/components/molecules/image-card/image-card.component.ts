@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
-export interface ImageCardClickedEvent {
-  imgSrc: Blob | null;
-  imgId: string;
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Image } from '../../../domain/image.interface';
+export interface ImageCardClickedEvent extends Image {
   domEvent: Event;
 }
 
@@ -12,30 +9,18 @@ export interface ImageCardClickedEvent {
   templateUrl: './image-card.component.html',
   styleUrls: ['./image-card.component.scss']
 })
-export class ImageCardComponent implements OnChanges {
-  @Input() imgSrc: Blob | null = null;
+export class ImageCardComponent {
+  @Input() imgSrc: string | null = '';
   @Input() clickActionText: string = '';
   @Input() afterActionText: string = '';
   @Input() imgId: string = '';
+  @Input() displayHoverOverlay = true;
+  @Input() width = 200;
+  @Input() height = 300;
   @Output() cardClicked = new EventEmitter<ImageCardClickedEvent>();
 
   public isHovered = false;
   public isActionDone = false;
-  public bypassedUrl: SafeUrl | null = null;
-  constructor(private sanitizer: DomSanitizer) {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes['imgSrc']) {
-      this.getImageDOMLink();
-    }
-  }
-
-  public getImageDOMLink() {
-    if(this.imgSrc) {
-      const fileUrl = URL.createObjectURL(this.imgSrc);
-      this.bypassedUrl = this.sanitizer.bypassSecurityTrustUrl(fileUrl);
-    }
-  }
 
   public handleCardClick(e: Event): void {
     this.cardClicked.emit({domEvent: e, imgSrc: this.imgSrc, imgId: this.imgId});

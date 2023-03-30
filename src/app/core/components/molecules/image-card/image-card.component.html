@@ -1,6 +1,8 @@
 <mat-card
   class="xmcy-image-card"
   data-test="xmcy-image-card"
+  [style.width]="width + 'px'"
+  [style.height]="height + 'px'"
   (click)="handleCardClick($event)"
   (mouseover)="isHovered = true"
   (mouseleave)="isHovered = false">
@@ -8,11 +10,12 @@
     mat-card-image
     class="xmcy-image-card__pic"
     data-test="image-card-pic"
-    [src]="bypassedUrl">
+    [src]="imgSrc">
   <div
     class="xmcy-image-card__hover-overlay"
     data-test="image-card-hover-overlay"
-    *ngIf="isHovered">
+    [ngClass]="displayHoverOverlay ? 'clickable' : '' "
+    *ngIf="isHovered && displayHoverOverlay">
     <span
       class="hover-overlay__text"
       data-test="image-card-action-text"

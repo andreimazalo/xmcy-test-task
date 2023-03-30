@@ -7,10 +7,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { SinglePhotoViewComponent } from './components/single-photo-view/single-photo-view.component';
+import { ImageCardModule } from '../core/components/molecules/image-card/image-card.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SinglePhotoViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ImageCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

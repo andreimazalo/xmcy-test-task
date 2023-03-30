@@ -1,12 +1,7 @@
 @use 'sass:map';
 @import '../../../theme/palette';
 
-.xmcy-image-card {
-  height: 300px;
-  width: 200px;
-}
-
-.xmcy-image-card:hover {
+.clickable:hover {
   cursor: pointer;
 }
 

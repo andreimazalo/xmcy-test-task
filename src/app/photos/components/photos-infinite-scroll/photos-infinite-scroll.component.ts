@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ImageService } from '../../../core/services/image.service';
 import { ImageCardClickedEvent } from '../../../core/components/molecules/image-card/image-card.component';
 import { v4 as uuidv4 } from 'uuid';
-import  * as localStorageUtil  from '../../../core/utils/local-storage.util';
 import  * as localStorageKeys  from '../../../core/constants/local-storage-keys';
+import { Observable, switchMap } from 'rxjs';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
 
 export interface PhotosInfiniteScrollConfig {
   photoWidth: number;
@@ -26,9 +27,13 @@ export class PhotosInfiniteScrollComponent implements OnInit {
   public loadPageSize = defaultPageSize;
   public imageIDs: Array<string> = [];
   public isLoadingNextPage = false;
-  public loadImageSource$ = this.imageService.getRandomImage(this.config.photoWidth, this.config.photoHeight);
+  public loadImageSource$: Observable<string> = this.imageService.getRandomImage(this.config.photoWidth, this.config.photoHeight).pipe(
+    switchMap((resp) => {
+        return this.imageService.convertImgToBase64(resp)
+    })
+  );
 
-  constructor(public imageService: ImageService) {
+  constructor(public imageService: ImageService, public localStorageService: LocalStorageService) {
   }
 
   ngOnInit() {
@@ -37,7 +42,7 @@ export class PhotosInfiniteScrollComponent implements OnInit {
 
   public addImagesPage() {
     for(let i = 0; i < this.loadPageSize; i++) {
-      this.imageIDs.push(uuidv4());
+      this.imageIDs.push(uuidv4())
     }
   }
 
@@ -56,8 +61,6 @@ export class PhotosInfiniteScrollComponent implements OnInit {
   }
 
   public saveImageToFavorites({imgId, imgSrc}: ImageCardClickedEvent) {
-    imgSrc?.text().then((blobText) => {
-      localStorageUtil.pushToMap(localStorageKeys.favoritePhotosMapKey, imgId, blobText);
-    });
+    this.localStorageService.pushToMap(localStorageKeys.favoritePhotosMapKey, imgId, imgSrc ?? '');
   }
 }

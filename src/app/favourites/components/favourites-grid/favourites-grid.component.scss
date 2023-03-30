@@ -1,0 +1,10 @@
+.favourite-photos__list {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.favourite-photos__image-card {
+  margin: 30px;
+}

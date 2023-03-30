@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, switchMap, tap } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { fromEvent, map, Observable } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,18 @@ export class ImageService {
   public getRandomImage(width: number, height: number): Observable<Blob | null>{
     return this.http.get(`${this.serviceURL}/${width}/${height}?random=${Math.random() % 10}`, {observe: 'response', responseType: 'blob'}).pipe(
       map(resp => resp.body)
+    );
+  }
+
+  public convertImgToBase64(imgBlob: Blob | null): Observable<string> {
+    let reader = new FileReader();
+
+    reader.readAsDataURL(imgBlob ?? new Blob());
+
+    return fromEvent(reader, 'load').pipe(
+      map(() => {
+        return reader.result as string;
+      })
     );
   }
 }

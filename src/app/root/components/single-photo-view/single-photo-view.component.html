@@ -1,0 +1,21 @@
+<div class="single-photo__wrapper">
+  <app-image-card
+    class="single-photo__image-card"
+    data-test="single-photo-image-card"
+    clickActionText="Open"
+    [width]="singlePhotoViewImageWidth"
+    [height]="singlePhotoViewImageHeight"
+    [imgId]="imgId"
+    [imgSrc]="imgSrc"
+    [displayHoverOverlay]="false">
+  </app-image-card>
+  <button
+    mat-stroked-button
+    color="warn"
+    class="single-photo__delete-button"
+    data-test="single-photo-delete-button"
+    routerLink="/favorites"
+    (click)="deletePhoto()">
+      Delete
+  </button>
+</div>

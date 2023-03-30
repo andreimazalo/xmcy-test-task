@@ -31,6 +31,16 @@ describe('ImageService', () => {
 
       expect(httpClientSpy.get).toHaveBeenCalled();
     });
-  })
+  });
+
+  describe('convertImgToBase64', () => {
+    it('should convert img blob into base64', () => {
+      service.convertImgToBase64(new Blob(['mock img bits'], { type: 'image/jpeg' })).subscribe(
+        resp => {
+          expect(resp).toEqual('data:image/jpeg;base64,bW9jayBpbWcgYml0cw==');
+        }
+      );
+    });
+  });
 
 });
