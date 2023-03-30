@@ -1,9 +1,9 @@
 import { of } from 'rxjs';
 import { NavigationStart, UrlCreationOptions, UrlTree } from '@angular/router';
 
-export function getItemSpyConstructor() {
+export function getItemSpyConstructor(customReturn?: any) {
   return spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-    return JSON.stringify({
+    return JSON.stringify(customReturn ?? {
       '1': 'test 1',
       '2': 'test 2',
     });

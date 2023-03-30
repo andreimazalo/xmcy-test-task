@@ -53,6 +53,27 @@ describe('FavouritesGridComponent', () => {
       component.goToSinglePhotoPage('1');
 
       expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/photos/1']);
-    })
-  })
+    });
+  });
+
+  describe('when favourite photos list is empty', () => {
+    it('should display empty list tip', () => {
+      component.favoritePhotos = {};
+      component.isFavoritesListEmpty = true;
+
+      fixture.detectChanges();
+
+      const tip = fixture.debugElement.query(By.css('[data-test=favourite-photos-empty-list-tip]'));
+
+      expect(tip.nativeElement.innerHTML).toContain('Add your first favorite photo by clicking on it on Photos page!');
+    });
+  });
+
+  describe('when favourite photos list is NOT empty', () => {
+    it('should NOT display empty list tip', () => {
+      const tip = fixture.debugElement.query(By.css('[data-test=favourite-photos-empty-list-tip]'));
+
+      expect(tip).toBeNull();
+    });
+  });
 });

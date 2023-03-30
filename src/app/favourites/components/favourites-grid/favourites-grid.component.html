@@ -9,4 +9,12 @@
       (cardClicked)="goToSinglePhotoPage(photo.key)"
     ></app-image-card>
   </ng-container>
+  <div
+    class="favourite-photos__empty-list-tip"
+    data-test="favourite-photos-empty-list-tip"
+    *ngIf="isFavoritesListEmpty">
+    <span>
+      Add your first favorite photo by clicking on it on Photos page!
+    </span>
+  </div>
 </div>
