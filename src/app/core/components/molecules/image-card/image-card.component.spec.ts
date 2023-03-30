@@ -2,24 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImageCardComponent } from './image-card.component';
 import { MatCardModule } from '@angular/material/card';
-import { By, DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('ImageCardComponent', () => {
   let component: ImageCardComponent;
   let fixture: ComponentFixture<ImageCardComponent>;
-  const sanitizerSpy = {
-    bypassSecurityTrustUrl: jasmine.createSpy('bypassSecurityTrustUrl').and.callFake((url: string) => {
-      return 'mock url' as SafeUrl;
-    }),
-  }
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ImageCardComponent ],
-      providers: [
-        {provide: DomSanitizer, useValue: sanitizerSpy}
-      ],
+      providers: [],
       imports: [
         MatCardModule,
         MatIconModule,
